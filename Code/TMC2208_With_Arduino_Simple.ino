@@ -1,41 +1,41 @@
 // This code controls a stepper motor using the TMC2208 stepper driver.
 // Features:
 // - Defines pins for enabling the driver, stepping, and setting direction.
-// - Sets up pin modes and initial states in the setup function.
+// - Configures pin modes and initial states in the setup function.
 // - In the loop function, alternates the stepping direction after a specified number of steps.
-// - Utilizes delay for controlling the speed of the stepper motor.
-
+// - Utilizes delay to control the speed of the stepper motor.
 
 // Pin Definitions
-#define EN_PIN 8    // LOW: Driver enabled. HIGH: Driver disabled
-#define STEP_PIN 9  // Step on rising edge
+#define EN_PIN 8    // LOW: Driver enabled, HIGH: Driver disabled
+#define STEP_PIN 9  // Step on the rising edge
 #define DIR_PIN 10  // Set stepping direction
 
-int noOfSteps = 250;
-int microSecondsDelay = 1000;
+int noOfSteps = 250;           // Number of steps to move in each direction
+int microSecondsDelay = 1000;  // Delay in microseconds between each step
 
 void setup() {
-  // Pin Declarations
+  // Configure pin modes
   pinMode(EN_PIN, OUTPUT);
   pinMode(STEP_PIN, OUTPUT);
   pinMode(DIR_PIN, OUTPUT);
 
-  // Initial Pin Configuration
-  digitalWrite(DIR_PIN, LOW);  // Setting a Direction
-  digitalWrite(EN_PIN, LOW);   // Driver Enabled
+  // Initialize pin states
+  digitalWrite(DIR_PIN, LOW);  // Set initial direction
+  digitalWrite(EN_PIN, LOW);   // Enable the driver
 }
 
 void loop() {
-
-  digitalWrite(DIR_PIN, LOW);  // Switching Direction
+  // Move the motor in one direction
+  digitalWrite(DIR_PIN, LOW);  // Set direction to LOW
   for (int i = 0; i < noOfSteps * 2; i++) {
-    digitalWrite(STEP_PIN, !digitalRead(STEP_PIN));
-    delayMicroseconds(microSecondsDelay);
+    digitalWrite(STEP_PIN, !digitalRead(STEP_PIN));  // Toggle the step pin
+    delayMicroseconds(microSecondsDelay);            // Wait for the specified delay
   }
 
-  digitalWrite(DIR_PIN, HIGH);  // Switching Direction
+  // Move the motor in the opposite direction
+  digitalWrite(DIR_PIN, HIGH);  // Set direction to HIGH
   for (int i = 0; i < noOfSteps * 2; i++) {
-    digitalWrite(STEP_PIN, !digitalRead(STEP_PIN));
-    delayMicroseconds(microSecondsDelay);
+    digitalWrite(STEP_PIN, !digitalRead(STEP_PIN));  // Toggle the step pin
+    delayMicroseconds(microSecondsDelay);            // Wait for the specified delay
   }
 }
